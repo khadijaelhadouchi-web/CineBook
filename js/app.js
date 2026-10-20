@@ -51,11 +51,30 @@ films.forEach(element => {
           <div class="p-4">
             <p class="text-xs font-bold uppercase tracking-wider text-cine-red">${element.genre}</p>
             <h3 class="mt-1 text-lg font-black">${element.genre}</h3>
-            <p class="mt-2 text-sm text-slate-500">2 h 04 min</p><button type="button"
-              class="mt-4 w-full rounded-xl bg-cine-red px-4 py-3 font-extrabold text-white">Sélectionné</button>
+            <p class="mt-2 text-sm text-slate-500">${heures(element)} </p><button type="button"
+              class="mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">Choisir
+              ce film</button>
           </div>
         </article>`
-})
+});
+//function pour transforme la duree
+
+// function heures(duree){
+//   let heure =  Math.floor(duree/60);
+//   let min = duree % 60;
+//   return heure+"h"+min+ "min";
+//   // return (duree/60)+"h"+duree % 60+"min";
+// };
+function heures(h){
+  let heure =  Math.floor(h.duree/60);
+   console.log(h.duree);
+  let min = h.duree % 60;
+   console.log(h.duree);
+  return heure+"h"+min+ "min";
+  // return (h.duree/60)+"h"+h.duree % 60+"min";
+ 
+  
+};
 
 
 // ==================================================
