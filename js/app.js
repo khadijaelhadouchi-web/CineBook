@@ -1,4 +1,4 @@
-"use strict";
+
 
 // Bienvenue dans le fichier de travail principal de CineBook !
 // Le HTML et les données sont prêts, mais les interactions sont volontairement absentes.
@@ -15,6 +15,8 @@
 // QUESTIONS : Quel identifiant correspond au catalogue ? Au prix total ?
 // TODO : créez ici des constantes explicites pour les éléments nécessaires.
 // ÉCRIVEZ VOTRE CODE ICI :
+const film = document.getElementById("films-container");
+
 
 
 // ==================================================
@@ -39,6 +41,21 @@
 // PISTE : ajoutez l'identifiant du film dans un attribut data-film-id du bouton.
 // MODÈLE : observez l'élément <article data-film-id="1"> dans index.html.
 // ÉCRIVEZ VOTRE CODE ICI :
+films.forEach(element => {
+    film.innerHTML += `<article class="overflow-hidden rounded-2xl border border-red-400 bg-white shadow-xl ring-2 ring-red-100"
+          data-film-id=${element.id}>
+          <div class="relative"><img src=${element.affiche} alt="Affiche de Mission Galaxie"
+              class="aspect-[2/3] w-full object-cover"><span
+              class="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold shadow-lg">${element.prix}
+              DH</span></div>
+          <div class="p-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-cine-red">${element.genre}</p>
+            <h3 class="mt-1 text-lg font-black">${element.genre}</h3>
+            <p class="mt-2 text-sm text-slate-500">2 h 04 min</p><button type="button"
+              class="mt-4 w-full rounded-xl bg-cine-red px-4 py-3 font-extrabold text-white">Sélectionné</button>
+          </div>
+        </article>`
+})
 
 
 // ==================================================
