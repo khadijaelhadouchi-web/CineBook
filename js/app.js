@@ -41,7 +41,7 @@ const film = document.getElementById("films-container");
 // PISTE : ajoutez l'identifiant du film dans un attribut data-film-id du bouton.
 // MODÈLE : observez l'élément <article data-film-id="1"> dans index.html.
 // ÉCRIVEZ VOTRE CODE ICI :
-console.log(films);
+// console.log(films);
 
 films.forEach(element => {
   film.innerHTML += `<article class="overflow-hidden rounded-2xl border border-red-400 bg-white shadow-xl ring-2 ring-red-100"
@@ -78,28 +78,38 @@ function heures(duree) {
 //   // return (h.duree/60)+"h"+h.duree % 60+"min";
 // };
 const btns = document.querySelectorAll(".choisir-flim");
+const sectionEtape=document.getElementById("remplaceFilm")
 btns.forEach(btn => {
   let selected = false;
   btn.addEventListener("click", function () {
     selected = !selected
     if (selected) {
-      console.log(btn);
+      // console.log(btn);
       btn.classList = 'mt-4 w-full rounded-xl bg-cine-red px-4 py-3 font-extrabold text-white';
       btn.innerHTML = 'Sélectionné';
-      const mvs = films.find(ele =>
-        ele.id == btn.id)
-    }else{
+      const mvs = films.find(ele =>ele.id == btn.id)
+      console.log(typeof mvs);
+       console.log(mvs)
+
+      // mvs.ele.splice(0);
+      // console.log(mvs);
+    } else {
       btn.classList = 'mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700';
-    btn.innerHTML = 'Choisir ce film'
+      btn.innerHTML = 'Choisir ce film';
+      mvs=null;
+      console.log(mvs)
+      // mvs.splice(0, mvs.lenght)
+      // console.log(mvs);
 
     }
+
   });
 
 })
-// btns.forEach(btn =>{
-//   btn.addEventListener("click", function(){
-//     console.log("ttttt");
-    ;
+  // btns.forEach(btn =>{
+  //   btn.addEventListener("click", function(){
+  //     console.log("ttttt");
+  ;
 //   } );
 
 // });
