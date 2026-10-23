@@ -55,12 +55,10 @@ films.forEach(element => {
             <h3 class="mt-1 text-lg font-black">${element.genre}</h3>
             <p class="mt-2 text-sm text-slate-500">${heures(element.duree)} </p>
             <button  type="button"
-              class="choisir-flim mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700" id="${element.id}">Choisir ce film</button>
+              class="choisir-flim mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700" id="${element.id}" data-film-id="${element.id}">Choisir ce film</button>
           </div>
         </article>`
 });
-
-
 //function pour transforme la duree
 
 function heures(duree) {
@@ -78,34 +76,123 @@ function heures(duree) {
 //   // return (h.duree/60)+"h"+h.duree % 60+"min";
 // };
 const btns = document.querySelectorAll(".choisir-flim");
-const sectionEtape=document.getElementById("remplaceFilm")
+const sectionEtape = document.getElementById("film-details");
+let moviarray = [];
+
+function selectionne(btnachanger) {
+  btnachanger.classList = 'mt-4 w-full rounded-xl bg-cine-red px-4 py-3 font-extrabold text-white';
+  btnachanger.innerHTML = 'Sélectionné';
+
+}
+function Choisir(p) {
+  p.classList = 'mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700';
+  p.innerHTML = 'Choisir ce film';
+
+}
+function votreFilm() {
+  sectionEtape.innerHTML = ""
+  films.forEach(element => {
+
+    if (moviarray.includes(element.id)) {
+
+      sectionEtape.innerHTML += `
+              <img src=${element.affiche} alt=${element.titre}
+                class="aspect-[2/3] w-24 rounded-xl object-cover shadow-md">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="text-xl font-black">${element.titre}</h3><span
+                    class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">${element.prix} DH</span>
+                </div>
+                <p class="mt-2 text-sm font-semibold text-slate-500">Science-fiction · ${element.duree}</p>
+                <p class="mt-3 leading-7 text-slate-600">Une exploratrice suit un signal inconnu jusqu’aux confins d’une
+                  galaxie oubliée.</p>
+              </div>   
+               `
+    }
+  })
+}
+
+const seancesContaine = document.getElementById("seances-container");
+function seansehoraire() {
+  seancesContaine.innerHTML = "";
+  films.forEach(element => {
+    if (moviarray == element.id) {
+      element.seances.forEach(e => {
+        seancesContaine.innerHTML += `
+              <button type="button" data-seance-id="103"
+                class="rounded-xl border border-slate-300 bg-slate-50 px-5 py-3 font-bold text-slate-700">${e.horaire}</button>`
+      })
+    }
+  })
+
+}
+let idFilm;
 btns.forEach(btn => {
   let selected = false;
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", function (e) {
+    idFilm = Number(e.target.dataset.filmId)
     selected = !selected
     if (selected) {
-      // console.log(btn);
-      btn.classList = 'mt-4 w-full rounded-xl bg-cine-red px-4 py-3 font-extrabold text-white';
-      btn.innerHTML = 'Sélectionné';
-      const mvs = films.find(ele =>ele.id == btn.id)
-      console.log(typeof mvs);
-       console.log(mvs)
-
-      // mvs.ele.splice(0);
-      // console.log(mvs);
+      selectionne(btn);
+      if (!moviarray.includes(Number(btn.id)) ) {
+        moviarray.push(Number(btn.id));
+        votreFilm();
+        seansehoraire()
+      }
+      
     } else {
-      btn.classList = 'mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700';
-      btn.innerHTML = 'Choisir ce film';
-      mvs=null;
-      console.log(mvs)
-      // mvs.splice(0, mvs.lenght)
-      // console.log(mvs);
-
+      Choisir(btn);
+      moviarray.splice(moviarray.indexOf(idFilm), 1);
+      votreFilm();
+      seansehoraire();
     }
 
   });
 
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // function foo() {
+  //   sectionEtape.innerHTML = ``
+  //   mvs.forEach(element => {
+  //     sectionEtape.innerHTML += `
+  //               <img src=${element.affiche} alt=${element.titre}
+  //                 class="aspect-[2/3] w-24 rounded-xl object-cover shadow-md">
+  //               <div>
+  //                 <div class="flex flex-wrap items-center gap-2">
+  //                   <h3 class="text-xl font-black">${element.titre}</h3><span
+  //                     class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">${element.prix} DH</span>
+  //                 </div>
+  //                 <p class="mt-2 text-sm font-semibold text-slate-500">Science-fiction · ${element.duree}</p>
+  //                 <p class="mt-3 leading-7 text-slate-600">Une exploratrice suit un signal inconnu jusqu’aux confins d’une
+  //                   galaxie oubliée.</p>
+  //               </div>
+
+  //               `
+  //   })
+  // }
+
   // btns.forEach(btn =>{
   //   btn.addEventListener("click", function(){
   //     console.log("ttttt");
@@ -145,7 +232,7 @@ btns.forEach(btn => {
 // ==================================================
 // US04 - SÉLECTIONNER UNE SÉANCE
 // ==================================================
-// OBJECTIF : mémoriser la séance cliquée et montrer visuellement le bouton actif.
+// OBJECTIF : mémoriser la séance sélectionnée et afficher le bouton actif
 // NOTIONS UTILES : addEventListener, find(), classList, conditions.
 // QUESTIONS : Faut-il autoriser une séance qui n'appartient pas au film choisi ?
 // TODO : retrouver la séance, modifier l'état et réinitialiser les sièges choisis.
